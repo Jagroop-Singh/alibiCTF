@@ -114,14 +114,9 @@ async fn handler_404() -> impl IntoResponse {
     (StatusCode::NOT_FOUND, "nothing to see here")
 }
 async fn sql(query: Query<ItemsQuery>) -> Html<String> {
-    // Testing out Queries
     let item_queries: ItemsQuery = query.0;
-    println!("{:?}", item_queries.search);
-
     let mut v: Vec<Item> = Vec::new();
     let connection = sqlite::open("challenge.db").unwrap();
-
-    // let mut query: String = String::new();
     let query = match item_queries.search {
         Some(k) => {
             "Select * from local_flight_data ".to_owned()
@@ -131,8 +126,6 @@ async fn sql(query: Query<ItemsQuery>) -> Html<String> {
         }
         None => "Select * from local_flight_data".to_string(),
     };
-    println!("query: {}", query);
-
     let statement = connection.prepare(query);
     if let Err(e) = statement {
         return Html("DB Error: ".to_string() + &e.to_string());
@@ -145,10 +138,6 @@ async fn sql(query: Query<ItemsQuery>) -> Html<String> {
         let long = statement.read::<String, _>("long").unwrap_or_else(c);
         let lat = statement.read::<String, _>("lat").unwrap_or_else(c);
         let manufacturer = statement.read::<String, _>("manufacturer").unwrap_or_else(c);
-        println!(
-            "flight: {}, tail: {}, long: {}, lat: {}, manufacturer: {}",
-            flight, tail_number, long, lat, manufacturer
-        );
         v.push(Item {
             flight: flight.to_owned(),
             tail_number: tail_number,
@@ -163,7 +152,7 @@ async fn sql(query: Query<ItemsQuery>) -> Html<String> {
 
 // basic handler that response with a static string
 async fn root() -> Html<String> {
-    println!("visited root");
+    // println!("visited root");
     let challenges: Vec<Challenge> = vec![
         Challenge {
             title: "SQLi One",
