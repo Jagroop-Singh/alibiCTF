@@ -9,37 +9,45 @@
   <body>
     <!-- Welcome to the first challenge -->
     <div class="content">
+      <div id="banner">
+        Local Flight Data
+      </div>
       <div id="search-bar">
         <input
           type="search"
           id="search-id"
           name="search"
           placeholder="Search for something"
-          onkeydown="search()"
+          onkeydown="search_on_enter()"
         />
-        <button>go!</button>
+        <button onclick="search_on_click()">go!</button>
       </div>
       <div class="table">
-        <ul>
+        <table>
+          <thead>
+            <th scope="col">flight</th>
+            <th scope="col">tail_number</th>
+            <th scope="col">long</th>
+            <th scope="col">lat</th>
+            <th scope="col">manufacturer</th>
+          </thead>
+          <tbody>
           {% for item in items %}
-          <li>
-            <div class="item">
-              <ul>
-                <li>{{ item.flight }}</li>
-                <li>{{ item.tail_number }}</li>
-                <li>{{ item.long }}</li>
-                <li>{{ item.lat }}</li>
-                <li>{{ item.manufacturer }}</li>
-              </ul>
-            </div>
-          </li>
+            <tr class="item">
+                <th>{{ item.flight }}</th>
+                <td>{{ item.tail_number }}</td>
+                <td>{{ item.long }}</td>
+                <td>{{ item.lat }}</td>
+                <td>{{ item.manufacturer }}</td>
+            </tr>
           {% endfor %}
-        </ul>
+          </tbody>
+        </table>
       </div>
     </div>
   </body>
   <script>
-    function search() {
+    function search_on_enter() {
       if (event.keyCode == 13) {
         let input = document.getElementById("search-id").value;
         document.location.href =
@@ -48,6 +56,14 @@
           "?search=" +
           input;
       }
+    }
+    function search_on_click() {
+        let input = document.getElementById("search-id").value;
+        document.location.href =
+          document.location.origin +
+          document.location.pathname +
+          "?search=" +
+          input;
     }
   </script>
 </html>

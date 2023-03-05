@@ -138,12 +138,13 @@ async fn sql(query: Query<ItemsQuery>) -> Html<String> {
         return Html("DB Error: ".to_string() + &e.to_string());
     }
     let mut statement = statement.unwrap();
+    let c = (|a: sqlite::Error|a.to_string());
     while let Ok(State::Row) = statement.next() {
-        let flight = statement.read::<String, _>("flight").unwrap();
-        let tail_number = statement.read::<String, _>("tail_number").unwrap();
-        let long = statement.read::<String, _>("long").unwrap();
-        let lat = statement.read::<String, _>("lat").unwrap();
-        let manufacturer = statement.read::<String, _>("manufacturer").unwrap();
+        let flight = statement.read::<String, _>("flight").unwrap_or_else(c);
+        let tail_number = statement.read::<String, _>("tail_number").unwrap_or_else(c);
+        let long = statement.read::<String, _>("long").unwrap_or_else(c);
+        let lat = statement.read::<String, _>("lat").unwrap_or_else(c);
+        let manufacturer = statement.read::<String, _>("manufacturer").unwrap_or_else(c);
         println!(
             "flight: {}, tail: {}, long: {}, lat: {}, manufacturer: {}",
             flight, tail_number, long, lat, manufacturer

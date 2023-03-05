@@ -1,5 +1,5 @@
-* {
-  list-style-type: none;
+html{
+  box-sizing: border-box;
 }
 html,
 body {
@@ -8,16 +8,22 @@ body {
 }
 .content {
   display: flex;
+  align-items: center;
   flex-direction: column;
   height: 100%;
   width: 100%;
 }
+#banner{
+  top: 10%;
+  position: relative;
+  font-size: 3rem;
+  font-style: bold;
+  border-bottom: 5px solid black;
+}
 #search-bar {
   position: relative;
-  left: 50%;
-  top: 30%;
   display: flex;
-  transform: translate(-50%, -50%);
+  top: 20%;
   background: #6a89cc;
   width: 31.25rem;
   height: 2.5rem;
@@ -53,28 +59,10 @@ body {
 .table {
   top: 35%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  position: relative;
+  transform: translateX(-50%);
+  position: absolute;
   display: flex;
   flex-direction: column;
   border: 5px solid #6a89cc;
   width: 35rem;
-}
-
-.item {
-  display: flex;
-}
-
-.item ul {
-  list-style: none;
-  list-style-type: none;
-}
-
-.item li {
-  float: left;
-  margin-right: 20px;
-}
-
-.item li::after {
-  content: "|";
 }
