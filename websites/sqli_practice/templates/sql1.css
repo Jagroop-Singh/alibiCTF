@@ -1,0 +1,80 @@
+* {
+  list-style-type: none;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+#search-bar {
+  position: relative;
+  left: 50%;
+  top: 30%;
+  display: flex;
+  transform: translate(-50%, -50%);
+  background: #6a89cc;
+  width: 31.25rem;
+  height: 2.5rem;
+  padding: 0.2rem 0.6rem 0.2rem 0.2rem;
+  box-sizing: border-box;
+  box-shadow: 1px 1px 0 0 #4a69bd, 1px 1px 0 0 #4a69bd, 2px 2px 0 0 #4a69bd,
+    3px 3px 0 0 #4a69bd, 4px 4px 0 0 #4a69bd, 5px 5px 0 0 #4a69bd,
+    6px 6px 0 0 #4a69bd;
+}
+
+#search-bar input {
+  border: 0;
+  outline: none;
+  height: 100%;
+  width: 85%;
+  padding: 0 1rem;
+  font-size: 1rem;
+  font-style: italic;
+}
+
+#search-bar button {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: white;
+  font-weight: bolder;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+}
+
+.table {
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 5px solid #6a89cc;
+  width: 35rem;
+}
+
+.item {
+  display: flex;
+}
+
+.item ul {
+  list-style: none;
+  list-style-type: none;
+}
+
+.item li {
+  float: left;
+  margin-right: 20px;
+}
+
+.item li::after {
+  content: "|";
+}

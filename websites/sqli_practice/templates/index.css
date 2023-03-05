@@ -1,0 +1,54 @@
+:root {
+  --d: 700ms;
+  --e: cubic-bezier(0.19, 1, 0.22, 1);
+  --font-sans: "Rubik", sans-serif;
+  --font-serif: "Cardo", serif;
+}
+body {
+  display: grid;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.Container {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+}
+.Content h1 {
+  font-size: 12px;
+}
+
+.challenge-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 1rem;
+  max-width: 1024px;
+  margin: 0 auto;
+  font-family: var(--font-sans);
+  grid-template-rows: auto;
+  grid-template-columns: auto;
+}
+
+.challenge {
+  flex: 1 0px;
+  text-decoration: none;
+  display: block;
+  border: 1px solid black;
+  color: black;
+  align-items: flex-end;
+  overflow: hidden;
+  padding: 1rem;
+  text-align: center;
+}
+
+/* .challenge { */
+/*   display: block; */
+/*   text-decoration: none; */
+/* } */

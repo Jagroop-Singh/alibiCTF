@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/static/sql1.css" type="text/css" />
+    <title>SQLi One</title>
+  </head>
+
+  <body>
+    <!-- Welcome to the first challenge -->
+    <div class="content">
+      <div id="search-bar">
+        <input
+          type="search"
+          id="search-id"
+          name="search"
+          placeholder="Search for something"
+          onkeydown="search()"
+        />
+        <button>go!</button>
+      </div>
+      <div class="table">
+        <ul>
+          {% for item in items %}
+          <li>
+            <div class="item">
+              <ul>
+                <li>{{ item.flight }}</li>
+                <li>{{ item.tail_number }}</li>
+                <li>{{ item.long }}</li>
+                <li>{{ item.lat }}</li>
+                <li>{{ item.manufacturer }}</li>
+              </ul>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </body>
+  <script>
+    function search() {
+      if (event.keyCode == 13) {
+        let input = document.getElementById("search-id").value;
+        document.location.href =
+          document.location.origin +
+          document.location.pathname +
+          "?search=" +
+          input;
+      }
+    }
+  </script>
+</html>
