@@ -113,6 +113,7 @@ async fn main() {
 async fn handler_404() -> impl IntoResponse {
     (StatusCode::NOT_FOUND, "nothing to see here")
 }
+
 async fn sql(query: Query<ItemsQuery>) -> Html<String> {
     let item_queries: ItemsQuery = query.0;
     let mut v: Vec<Item> = Vec::new();
@@ -131,7 +132,7 @@ async fn sql(query: Query<ItemsQuery>) -> Html<String> {
         return Html("DB Error: ".to_string() + &e.to_string());
     }
     let mut statement = statement.unwrap();
-    let c = (|a: sqlite::Error|a.to_string());
+    let c = |a: sqlite::Error|a.to_string();
     while let Ok(State::Row) = statement.next() {
         let flight = statement.read::<String, _>("flight").unwrap_or_else(c);
         let tail_number = statement.read::<String, _>("tail_number").unwrap_or_else(c);
@@ -149,6 +150,45 @@ async fn sql(query: Query<ItemsQuery>) -> Html<String> {
     let s = SqlTemplate { items: v };
     Html(s.render().unwrap())
 }
+
+
+async fn sql2(query: Query<ItemsQuery>) -> Html<String> {
+    let item_queries: ItemsQuery = query.0;
+    let mut v: Vec<Item> = Vec::new();
+    let connection = sqlite::open("challenge.db").unwrap();
+    let query = match item_queries.search {
+        Some(k) => {
+            "Select * from local_flight_data ".to_owned()
+                + &"where manufacturer LIKE '%"
+                + &k
+                + "%';"
+        }
+        None => "Select * from local_flight_data".to_string(),
+    };
+    let statement = connection.prepare(query);
+    if let Err(e) = statement {
+        return Html("DB Error: ".to_string() + &e.to_string());
+    }
+    let mut statement = statement.unwrap();
+    let c = |a: sqlite::Error|a.to_string();
+    while let Ok(State::Row) = statement.next() {
+        let flight = statement.read::<String, _>("flight").unwrap_or_else(c);
+        let tail_number = statement.read::<String, _>("tail_number").unwrap_or_else(c);
+        let long = statement.read::<String, _>("long").unwrap_or_else(c);
+        let lat = statement.read::<String, _>("lat").unwrap_or_else(c);
+        let manufacturer = statement.read::<String, _>("manufacturer").unwrap_or_else(c);
+        v.push(Item {
+            flight: flight.to_owned(),
+            tail_number: tail_number,
+            long: long,
+            lat: lat,
+            manufacturer: manufacturer,
+        });
+    }
+    let s = SqlTemplate { items: v };
+    Html(s.render().unwrap())
+}
+
 
 // basic handler that response with a static string
 async fn root() -> Html<String> {
